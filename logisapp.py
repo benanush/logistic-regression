@@ -15,7 +15,7 @@ st.title("❤️ Heart Disease Prediction using Logistic Regression")
 # -----------------------------
 @st.cache_data
 def load_data():
-    return pd.read_csv(r"C:\Users\benan\Documents\Data_Scientist\Streamlit\framingham_heart_disease.csv")
+    return pd.read_csv("https://github.com/benanush/logistic-regression/blob/main/framingham_heart_disease.csv")
 
 try:
     df = load_data()
@@ -153,3 +153,4 @@ if st.button("Predict"):
         st.error("⚠️ High Risk of Heart Disease")
     else:
         st.success("✅ Low Risk of Heart Disease")
+
