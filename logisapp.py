@@ -13,25 +13,31 @@ st.title("❤️ Heart Disease Prediction using Logistic Regression")
 # -----------------------------
 # Upload Dataset
 # -----------------------------
-st.subheader("📂 Upload Dataset")
-
-uploaded_file = st.file_uploader(
-    "Upload the Framingham Heart Disease CSV file",
-    type=["csv"]
-)
-
-if uploaded_file is None:
-    st.warning("Please upload a CSV file to continue.")
-    st.stop()
-
-df = pd.read_csv(uploaded_file)
-st.success("Dataset uploaded successfully!")
-
 # -----------------------------
-# Dataset Preview
+# Load Dataset (Auto + Upload)
 # -----------------------------
-st.subheader("📊 Dataset Preview")
-st.write(df.head())
+st.subheader("📂 Dataset")
+
+df = None
+
+try:
+    # Try loading from repo (Streamlit Cloud / local)
+    df = pd.read_csv("framingham_heart_disease.csv")
+    st.success("Dataset loaded from repository!")
+except:
+    # Fallback to file upload
+    uploaded_file = st.file_uploader(
+        "Upload the Framingham Heart Disease CSV file",
+        type=["csv"]
+    )
+
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
+        st.success("Dataset uploaded successfully!")
+    else:
+        st.warning("Please upload the Framingham Heart Disease CSV file to continue.")
+        st.stop()
+
 
 # -----------------------------
 # Handle Missing Values
@@ -161,3 +167,4 @@ if st.button("Predict"):
         st.error("⚠️ High Risk of Heart Disease")
     else:
         st.success("✅ Low Risk of Heart Disease")
+
