@@ -11,18 +11,21 @@ st.set_page_config(page_title="Heart Disease Prediction", layout="centered")
 st.title("❤️ Heart Disease Prediction using Logistic Regression")
 
 # -----------------------------
-# Load Dataset
+# Upload Dataset
 # -----------------------------
-@st.cache_data
-def load_data():
-    return pd.read_csv("https://github.com/benanush/logistic-regression/blob/main/framingham_heart_disease.csv")
+st.subheader("📂 Upload Dataset")
 
-try:
-    df = load_data()
-    st.success("Dataset loaded successfully!")
-except:
-    st.error("Dataset not found! Place framingham_heart_disease.csv in the same folder.")
+uploaded_file = st.file_uploader(
+    "Upload the Framingham Heart Disease CSV file",
+    type=["csv"]
+)
+
+if uploaded_file is None:
+    st.warning("Please upload a CSV file to continue.")
     st.stop()
+
+df = pd.read_csv(uploaded_file)
+st.success("Dataset uploaded successfully!")
 
 # -----------------------------
 # Dataset Preview
@@ -143,7 +146,12 @@ st.subheader("🔮 Predict Heart Disease Risk")
 
 user_input = {}
 for col in X.columns:
-    user_input[col] = st.number_input(col, float(df[col].min()), float(df[col].max()), float(df[col].mean()))
+    user_input[col] = st.number_input(
+        col,
+        float(df[col].min()),
+        float(df[col].max()),
+        float(df[col].mean())
+    )
 
 input_df = pd.DataFrame([user_input])
 
@@ -153,4 +161,3 @@ if st.button("Predict"):
         st.error("⚠️ High Risk of Heart Disease")
     else:
         st.success("✅ Low Risk of Heart Disease")
-
