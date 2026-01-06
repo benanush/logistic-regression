@@ -22,7 +22,7 @@ df = None
 
 try:
     # Try loading from repo (Streamlit Cloud / local)
-    df = pd.read_csv("framingham_heart_disease.csv")
+    df = pd.read_csv(r"framingham_heart_disease.csv")
     st.success("Dataset loaded from repository!")
 except:
     # Fallback to file upload
@@ -167,4 +167,5 @@ if st.button("Predict"):
         st.error("⚠️ High Risk of Heart Disease")
     else:
         st.success("✅ Low Risk of Heart Disease")
+
 
